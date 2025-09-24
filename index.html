@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script defer src="./js/main.js"></script>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Gastos Mensuales</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+      color: #333;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .tablas {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    tr:hover {
+      background: #f9f9f9;
+    }
+
+    .total {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .filtro-mes {
+      margin-bottom: 20px;
+    }
+
+    .total-general {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f0f9f0;
+      border: 1px solid #cce5cc;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    .grafico {
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>📊 Control de Gastos Mensuales</header>
+  
+  <div class="container">
+    <!-- Filtro de mes -->
+    <div class="filtro-mes">
+      <label for="mesSelect">Seleccionar Mes:</label>
+      <select id="mesSelect"></select>
+    </div>
+
+    <!-- Formulario -->
+    <form id="gastoForm">
+      <input type="date" id="fecha" required>
+      <input type="text" id="descripcion" placeholder="Descripción" required>
+      <input type="number" id="monto" placeholder="Monto" required>
+      <select id="categoria" required>
+        <option value="">Categoría</option>
+        <option value="Tarjeta">Tarjeta</option>
+        <option value="Servicio">Servicio</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <select id="persona" required>
+        <option value="">Persona</option>
+        <option value="Gisella">Gisella</option>
+        <option value="Martin">Martin</option>
+      </select>
+      <button type="submit">Agregar Gasto</button>
+    </form>
+
+    <!-- Tablas de gastos -->
+    <div class="tablas">
+      <div style="flex:1;">
+        <h3>Gastos de Gisella</h3>
+        <table id="tablaGisella">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Categoría</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="total">Total Gisella: $ <span id="totalGisella">0</span></div>
+      </div>
+
+      <div style="flex:1;">
+        <h3>Gastos de Martin</h3>
+        <table id="tablaMartin">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Categoría</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="total">Total Martin: $ <span id="totalMartin">0</span></div>
+      </div>
+    </div>
+
+    <!-- Total general -->
+    <div class="total-general">
+      Total General del Mes: $ <span id="totalGeneral">0</span>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="grafico">
+      <h3>Distribución de Gastos por Persona</h3>
+      <canvas id="graficoGastos" width="400" height="200"></canvas>
+    </div>
+  </div>
+</body>
+</html>
