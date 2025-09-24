@@ -101,3 +101,47 @@
     mesSelect.addEventListener("change", mostrarGastos);
 
     actualizarMeses();
+
+    function mostrarGastos() {
+  tablaGisella.innerHTML = "";
+  tablaMartin.innerHTML = "";
+  let totalGisella = 0;
+  let totalMartin = 0;
+
+  gastos.filter(g => g.mes === mesSelect.value).forEach((g, index) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td>${g.fecha}</td>
+      <td>${g.descripcion}</td>
+      <td>$${g.monto.toFixed(2)}</td>
+      <td>${g.categoria}</td>
+      <td><button class="eliminar-btn" data-index="${index}">❌</button></td>
+    `;
+
+    if (g.persona === "Gisella") {
+      tablaGisella.appendChild(fila);
+      totalGisella += g.monto;
+    } else if (g.persona === "Martin") {
+      tablaMartin.appendChild(fila);
+      totalMartin += g.monto;
+    }
+  });
+
+  totalGisellaEl.textContent = totalGisella.toFixed(2);
+  totalMartinEl.textContent = totalMartin.toFixed(2);
+  totalGeneralEl.textContent = (totalGisella + totalMartin).toFixed(2);
+
+  actualizarGrafico(totalGisella, totalMartin);
+  agregarEventosEliminar();
+}
+
+function agregarEventosEliminar() {
+  document.querySelectorAll(".eliminar-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const index = parseInt(btn.dataset.index);
+      gastos.splice(index, 1);
+      localStorage.setItem("gastos", JSON.stringify(gastos));
+      actualizarMeses();
+    });
+  });
+}
