@@ -108,15 +108,17 @@
   let totalGisella = 0;
   let totalMartin = 0;
 
-  gastos.filter(g => g.mes === mesSelect.value).forEach((g, index) => {
-    const fila = document.createElement("tr");
-    fila.innerHTML = `
-      <td>${g.fecha}</td>
-      <td>${g.descripcion}</td>
-      <td>$${g.monto.toFixed(2)}</td>
-      <td>${g.categoria}</td>
-      <td><button class="eliminar-btn" data-index="${index}">❌</button></td>
-    `;
+ gastos.forEach((g, i) => {
+  if (g.mes !== mesSelect.value) return;
+const fila = document.createElement("tr");
+fila.innerHTML = `
+  <td>${g.fecha}</td>
+  <td>${g.descripcion}</td>
+  <td>$${g.monto.toFixed(2)}</td>
+  <td>${g.categoria}</td>
+  <td><button class="eliminar-btn" data-index="${i}">❌</button></td>
+`;
+
 
     if (g.persona === "Gisella") {
       tablaGisella.appendChild(fila);
